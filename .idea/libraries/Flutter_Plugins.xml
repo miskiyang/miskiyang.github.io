@@ -1,8 +1,6 @@
 <component name="libraryTable">
   <library name="Flutter Plugins" type="FlutterPluginsLibraryType">
-    <CLASSES>
-      <root url="file://$PROJECT_DIR$/../../../Sdk/flutter-sdk/.pub-cache/hosted/pub.flutter-io.cn/image_gallery_saver-1.6.7" />
-    </CLASSES>
+    <CLASSES />
     <JAVADOC />
     <SOURCES />
   </library>
