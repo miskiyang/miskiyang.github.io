@@ -55,7 +55,7 @@ class CartoonModel {
     _cartoonVariableId = cartoonVariableId;
   }
 
-  CartoonModel.fromJson(dynamic json) {
+  CartoonModel.fromJson(Map<String, dynamic> json) {
     _id = json["id"];
     _title = json["title"];
     _descs = json["descs"];

@@ -1,7 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:personal_website/core/FictionRepository.dart';
+import 'package:personal_website/core/fiction_repository.dart';
 import 'package:personal_website/model/fiction_model.dart';
 import 'package:personal_website/model/http/ResultDto.dart';
+import 'package:personal_website/ui/global/global_image.dart';
+import 'package:personal_website/ui/global/global_toast.dart';
 
 /// 小说页面
 class FictionPage extends StatefulWidget {
@@ -37,7 +40,13 @@ class _FictionPageState extends State<FictionPage> {
         child: Row(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Image.network(item.cover, width: 90, height: 120, fit: BoxFit.fill),
+            CachedNetworkImage(
+                placeholder: defaultPlaceHolder,
+                errorWidget: defaultErrorHolder,
+                imageUrl: item.cover,
+                width: 90,
+                height: 120,
+                fit: BoxFit.cover),
             Expanded(
                 child: Padding(
               padding: EdgeInsets.fromLTRB(8, 0, 0, 8),
@@ -82,7 +91,11 @@ class _FictionPageState extends State<FictionPage> {
     Future<ResultDto<List<FictionModel>>> result =
         _fictionRepository.listStoryBookByPage(_fictionType, 0, 10);
     result.then((value) {
-      _novels = value.data;
+      if (value.success) {
+        _novels = value.data;
+      } else {
+        GlobalToast.toastShort(value.msg);
+      }
       if (mounted) {
         setState(() {});
       }

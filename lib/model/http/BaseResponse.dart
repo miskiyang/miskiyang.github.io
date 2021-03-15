@@ -20,7 +20,12 @@ class BaseResponse<T> {
   BaseResponse.fromJson(Map<String, dynamic> json) {
     _code = json["code"];
     _msg = json["msg"];
-    _data = Response.fromJson(json["data"]);
+    var jsonData = json["data"];
+    if (null != jsonData) {
+      _data = Response.fromJson(json["data"]);
+    } else {
+      _data = null;
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -60,7 +65,12 @@ class Response<T> {
 
   Response.fromJson(dynamic json) {
     _size = json["size"];
-    _data = JsonParseAdapter().convertJsonToT(json["data"]);
+    var jsonData = json["data"];
+    if (null != jsonData) {
+      _data = JsonParseAdapter().convertJsonToT(json["data"]);
+    } else {
+      _data = null;
+    }
     _count = json["count"];
     _from = json["from"];
   }

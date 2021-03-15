@@ -1,7 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:personal_website/core/VideoRepository.dart';
+import 'package:personal_website/core/video_repository.dart';
 import 'package:personal_website/model/http/ResultDto.dart';
 import 'package:personal_website/model/video_model.dart';
+import 'package:personal_website/ui/global/global_image.dart';
+
+import 'global/global_toast.dart';
 
 /// 视频页面
 class VideoPage extends StatefulWidget {
@@ -15,7 +19,7 @@ class VideoPage extends StatefulWidget {
 
 class _VideoPageState extends State<VideoPage> {
   VideoRepository _cartoonRepository = new VideoRepository();
-  List<VideoModel> _cartoons = <VideoModel>[];
+  List<VideoModel> _videos = <VideoModel>[];
 
   /// 视频类型
   String _videoType;
@@ -25,7 +29,7 @@ class _VideoPageState extends State<VideoPage> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: _cartoons.map((e) => buildListItemView(e)).toList(),
+      children: _videos.map((e) => buildListItemView(e)).toList(),
     );
   }
 
@@ -37,7 +41,13 @@ class _VideoPageState extends State<VideoPage> {
         child: Row(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Image.network(item.cover, width: 90, height: 120, fit: BoxFit.fill),
+            CachedNetworkImage(
+                placeholder: defaultPlaceHolder,
+                errorWidget: defaultErrorHolder,
+                imageUrl: item.cover,
+                width: 90,
+                height: 120,
+                fit: BoxFit.cover),
             Expanded(
                 child: Padding(
               padding: EdgeInsets.fromLTRB(8, 0, 0, 8),
@@ -82,7 +92,11 @@ class _VideoPageState extends State<VideoPage> {
     Future<ResultDto<List<VideoModel>>> result =
         _cartoonRepository.listVideoByPage(_videoType, 1, 10);
     result.then((value) {
-      _cartoons = value.data;
+      if (value.success) {
+        _videos = value.data;
+      } else {
+        GlobalToast.toastShort(value.msg);
+      }
       if (mounted) {
         setState(() {});
       }

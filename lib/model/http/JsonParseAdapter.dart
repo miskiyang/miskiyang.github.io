@@ -1,3 +1,4 @@
+import 'package:personal_website/model/cartoon_model.dart';
 import 'package:personal_website/model/fiction_model.dart';
 import 'package:personal_website/model/video_model.dart';
 
@@ -22,6 +23,10 @@ class JsonParseAdapter {
       return (json as List)
           .map((element) => FictionModel.fromJson(element))
           .toList() as T;
+    } else if (List<CartoonModel>() is T) {
+      return (json as List)
+          .map((element) => CartoonModel.fromJson(element))
+          .toList() as T;
     } else if (List<VideoModel>() is T) {
       return (json as List)
           .map((element) => VideoModel.fromJson(element))
@@ -35,6 +40,8 @@ class JsonParseAdapter {
   T _convertToObject<T>(dynamic json) {
     if (FictionModel == T) {
       return FictionModel.fromJson(json) as T;
+    } else if (CartoonModel == T) {
+      return CartoonModel.fromJson(json) as T;
     } else if (VideoModel == T) {
       return VideoModel.fromJson(json) as T;
     } else {
