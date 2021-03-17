@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:personal_website/core/video_repository.dart';
 import 'package:personal_website/model/http/ResultDto.dart';
 import 'package:personal_website/model/video_model.dart';
+import 'package:personal_website/ui/base/base_state.dart';
 import 'package:personal_website/ui/global/global_image.dart';
 
 import 'global/global_toast.dart';
@@ -17,7 +18,7 @@ class VideoPage extends StatefulWidget {
   _VideoPageState createState() => _VideoPageState(_videoType);
 }
 
-class _VideoPageState extends State<VideoPage> {
+class _VideoPageState extends BaseState<VideoPage> {
   VideoRepository _cartoonRepository = new VideoRepository();
   List<VideoModel> _videos = <VideoModel>[];
 
@@ -27,11 +28,9 @@ class _VideoPageState extends State<VideoPage> {
   _VideoPageState(this._videoType);
 
   @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: _videos.map((e) => buildListItemView(e)).toList(),
-    );
-  }
+  Widget buildBodyWidget(BuildContext buildContext) => ListView(
+        children: _videos.map((e) => buildListItemView(e)).toList(),
+      );
 
   /// 构建listItemView
   Widget buildListItemView(VideoModel item) {
@@ -98,6 +97,7 @@ class _VideoPageState extends State<VideoPage> {
         GlobalToast.toastShort(value.msg);
       }
       if (mounted) {
+        setLoadStatus(true);
         setState(() {});
       }
     });

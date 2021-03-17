@@ -1,3 +1,5 @@
+import 'package:personal_website/model/cartoon_chapter_model.dart';
+import 'package:personal_website/model/cartoon_content_model.dart';
 import 'package:personal_website/model/cartoon_model.dart';
 import 'package:personal_website/model/fiction_model.dart';
 import 'package:personal_website/model/video_model.dart';
@@ -27,6 +29,10 @@ class JsonParseAdapter {
       return (json as List)
           .map((element) => CartoonModel.fromJson(element))
           .toList() as T;
+    } else if (List<CartoonChapterModel>() is T) {
+      return (json as List)
+          .map((element) => CartoonChapterModel.fromJson(element))
+          .toList() as T;
     } else if (List<VideoModel>() is T) {
       return (json as List)
           .map((element) => VideoModel.fromJson(element))
@@ -42,6 +48,10 @@ class JsonParseAdapter {
       return FictionModel.fromJson(json) as T;
     } else if (CartoonModel == T) {
       return CartoonModel.fromJson(json) as T;
+    } else if (CartoonChapterModel == T) {
+      return CartoonChapterModel.fromJson(json) as T;
+    } else if (CartoonContentModel == T) {
+      return CartoonContentModel.fromJson(json) as T;
     } else if (VideoModel == T) {
       return VideoModel.fromJson(json) as T;
     } else {

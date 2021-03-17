@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:personal_website/core/cartoon_repository.dart';
 import 'package:personal_website/model/cartoon_model.dart';
 import 'package:personal_website/model/http/ResultDto.dart';
+import 'package:personal_website/ui/base/base_state.dart';
 import 'package:personal_website/ui/base_page.dart';
 import 'package:personal_website/ui/global/global_image.dart';
 
-import 'cartoon_detail.dart';
+import 'cartoon_detail_page.dart';
 import 'global/global_toast.dart';
 
 /// 漫画页面
@@ -19,7 +20,7 @@ class CartoonPage extends StatefulWidget {
   _CartoonPageState createState() => _CartoonPageState(_cartoonType);
 }
 
-class _CartoonPageState extends State<CartoonPage> {
+class _CartoonPageState extends BaseState<CartoonPage> {
   CartoonRepository _cartoonRepository = new CartoonRepository();
   List<CartoonModel> _cartoons = <CartoonModel>[];
 
@@ -29,11 +30,9 @@ class _CartoonPageState extends State<CartoonPage> {
   _CartoonPageState(this._cartoonType);
 
   @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: _cartoons.map((e) => buildListItemView(e)).toList(),
-    );
-  }
+  Widget buildBodyWidget(BuildContext buildContext) => ListView(
+        children: _cartoons.map((e) => buildListItemView(e)).toList(),
+      );
 
   /// 构建listItemView
   Widget buildListItemView(CartoonModel item) {
@@ -90,7 +89,7 @@ class _CartoonPageState extends State<CartoonPage> {
           ),
         ),
         onTap: () => Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => CartoonDetailPage())));
+            MaterialPageRoute(builder: (context) => CartoonDetailPage(item))));
   }
 
   @override
@@ -104,6 +103,7 @@ class _CartoonPageState extends State<CartoonPage> {
         GlobalToast.toastShort(value.msg);
       }
       if (mounted) {
+        setLoadStatus(true);
         setState(() {});
       }
     });

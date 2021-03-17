@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 /// 全局图片相关的配置
 /// placeholder
@@ -32,3 +33,10 @@ Widget defaultErrorHolder(context, url, e) => Container(
             fontStyle: FontStyle.italic),
       ),
     );
+
+///透明的占位图
+Widget transparentPlaceHolder(context, url) => Image.memory(kTransparentImage);
+
+///透明的错误占位图
+Widget transparentErrorHolder(context, url, e) =>
+    Image.memory(kTransparentImage);

@@ -8,7 +8,7 @@
 /// updateTime : "2021-02-26 00:00:00.0"
 /// creationTime : "2020-12-26T17:22:21.000+00:00"
 /// cartoonVariableId : 2
-
+/// 漫画信息
 class CartoonModel {
   int _id;
   String _title;
@@ -81,5 +81,10 @@ class CartoonModel {
     map["creationTime"] = _creationTime;
     map["cartoonVariableId"] = _cartoonVariableId;
     return map;
+  }
+
+  @override
+  String toString() {
+    return 'CartoonModel{_id: $_id, _title: $_title, _descs: $_descs, _cover: $_cover, _author: $_author, _cartoonType: $_cartoonType, _cartoonId: $_cartoonId, _updateTime: $_updateTime, _creationTime: $_creationTime, _cartoonVariableId: $_cartoonVariableId}';
   }
 }

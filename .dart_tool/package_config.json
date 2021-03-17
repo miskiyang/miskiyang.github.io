@@ -104,6 +104,12 @@
       "languageVersion": "2.6"
     },
     {
+      "name": "flutter_easyrefresh",
+      "rootUri": "file:///Users/yangjianxin/Documents/Sdk/flutter-sdk/.pub-cache/hosted/pub.flutter-io.cn/flutter_easyrefresh-2.1.8",
+      "packageUri": "lib/",
+      "languageVersion": "2.3"
+    },
+    {
       "name": "flutter_test",
       "rootUri": "file:///Users/yangjianxin/Documents/Sdk/flutter-sdk/packages/flutter_test",
       "packageUri": "lib/",
@@ -144,6 +150,12 @@
       "rootUri": "file:///Users/yangjianxin/Documents/Sdk/flutter-sdk/.pub-cache/hosted/pub.flutter-io.cn/intl-0.16.1",
       "packageUri": "lib/",
       "languageVersion": "2.5"
+    },
+    {
+      "name": "loading",
+      "rootUri": "file:///Users/yangjianxin/Documents/Sdk/flutter-sdk/.pub-cache/hosted/pub.flutter-io.cn/loading-1.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
     },
     {
       "name": "matcher",
@@ -344,7 +356,7 @@
       "languageVersion": "2.10"
     }
   ],
-  "generated": "2021-03-02T09:13:29.765404Z",
+  "generated": "2021-03-17T06:14:01.704020Z",
   "generator": "pub",
   "generatorVersion": "2.10.5"
 }

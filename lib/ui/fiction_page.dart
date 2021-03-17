@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:personal_website/core/fiction_repository.dart';
 import 'package:personal_website/model/fiction_model.dart';
 import 'package:personal_website/model/http/ResultDto.dart';
+import 'package:personal_website/ui/base/base_state.dart';
 import 'package:personal_website/ui/global/global_image.dart';
 import 'package:personal_website/ui/global/global_toast.dart';
 
@@ -16,7 +17,7 @@ class FictionPage extends StatefulWidget {
   _FictionPageState createState() => _FictionPageState(_fictionType);
 }
 
-class _FictionPageState extends State<FictionPage> {
+class _FictionPageState extends BaseState<FictionPage> {
   FictionRepository _fictionRepository = new FictionRepository();
   List<FictionModel> _novels = <FictionModel>[];
 
@@ -26,11 +27,9 @@ class _FictionPageState extends State<FictionPage> {
   _FictionPageState(this._fictionType);
 
   @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: _novels.map((e) => buildListItemView(e)).toList(),
-    );
-  }
+  Widget buildBodyWidget(BuildContext buildContext) => ListView(
+        children: _novels.map((e) => buildListItemView(e)).toList(),
+      );
 
   /// 构建listItemView
   Widget buildListItemView(FictionModel item) {
@@ -97,6 +96,7 @@ class _FictionPageState extends State<FictionPage> {
         GlobalToast.toastShort(value.msg);
       }
       if (mounted) {
+        setLoadStatus(true);
         setState(() {});
       }
     });

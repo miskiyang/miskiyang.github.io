@@ -31,7 +31,6 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
                     size: 30,
                   ),
                   onPressed: () {
-                    print("onPressed");
                     Scaffold.of(context).openDrawer();
                   },
                 )),
