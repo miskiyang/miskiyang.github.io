@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:personal_website/ui/cartoon_page.dart';
 import 'package:personal_website/ui/custom/custom_underline_tab_indicator.dart';
 import 'package:personal_website/ui/fiction_page.dart';
@@ -18,28 +19,33 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    timeDilation = 2.0;
     return Scaffold(
       appBar: AppBar(
+        // 设置为白色字体
+        brightness: Brightness.dark,
+        leading: Builder(builder: (context) {
+          return IconButton(
+            padding: EdgeInsets.zero,
+            icon: Icon(
+              Icons.menu,
+              size: 30,
+            ),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+          );
+        }),
         title: Text(
           _selectedMenuKey,
           style: TextStyle(fontSize: 18, color: Colors.white),
         ),
-        leading: Builder(
-            builder: (BuildContext context) => IconButton(
-                  icon: Icon(
-                    Icons.menu,
-                    size: 30,
-                  ),
-                  onPressed: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                )),
         bottom: TabBar(
           isScrollable: true,
           labelColor: Colors.white,
-          labelStyle: TextStyle(fontSize: 18),
+          labelStyle: TextStyle(fontSize: 17),
           unselectedLabelColor: Colors.white54,
-          unselectedLabelStyle: TextStyle(fontSize: 15),
+          unselectedLabelStyle: TextStyle(fontSize: 17),
           indicatorColor: Colors.white,
           indicatorSize: TabBarIndicatorSize.label,
           indicator: CustomUnderlineTabIndicator(
@@ -219,4 +225,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
     _tabController.dispose();
     super.dispose();
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

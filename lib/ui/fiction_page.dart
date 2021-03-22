@@ -1,9 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:personal_website/core/fiction_repository.dart';
 import 'package:personal_website/model/fiction_model.dart';
 import 'package:personal_website/model/http/ResultDto.dart';
 import 'package:personal_website/ui/base/base_state.dart';
+import 'package:personal_website/ui/base_page.dart';
+import 'package:personal_website/ui/fiction_detail_page.dart';
 import 'package:personal_website/ui/global/global_image.dart';
 import 'package:personal_website/ui/global/global_toast.dart';
 
@@ -17,7 +20,8 @@ class FictionPage extends StatefulWidget {
   _FictionPageState createState() => _FictionPageState(_fictionType);
 }
 
-class _FictionPageState extends BaseState<FictionPage> {
+class _FictionPageState extends BaseState<FictionPage>
+    with AutomaticKeepAliveClientMixin {
   FictionRepository _fictionRepository = new FictionRepository();
   List<FictionModel> _novels = <FictionModel>[];
 
@@ -26,72 +30,181 @@ class _FictionPageState extends BaseState<FictionPage> {
 
   _FictionPageState(this._fictionType);
 
+  EasyRefreshController _controller;
+
+  GlobalKey _globalRefreshKey = GlobalKey();
+
+  int _pageSize = 10;
+  int _pageIndex = 1;
+  bool _hasMore = false;
+
   @override
-  Widget buildBodyWidget(BuildContext buildContext) => ListView(
-        children: _novels.map((e) => buildListItemView(e)).toList(),
-      );
+  Widget build(BuildContext context) {
+    super.build(context);
+    return buildContent(context);
+  }
+
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget buildBodyWidget(BuildContext buildContext) {
+    return EasyRefresh(
+        key: _globalRefreshKey,
+        controller: _controller,
+        enableControlFinishLoad: true,
+        header: ClassicalHeader(
+          refreshText: '下拉刷新',
+          refreshReadyText: '松开刷新',
+          refreshingText: '正在加载数据',
+          refreshedText: '加载完成',
+          infoText: '更新于%T',
+          showInfo: true,
+          bgColor: Colors.transparent,
+          textColor: Colors.red.shade500,
+          infoColor: Colors.red.shade500,
+        ),
+        footer: ClassicalFooter(
+          loadText: '上拉加载更多漫画',
+          loadReadyText: '松开加载更多漫画',
+          loadingText: '正在加载更多漫画',
+          loadedText: '加载完成',
+          noMoreText: '没有更多了',
+          infoText: '更新于%T',
+          showInfo: true,
+          bgColor: Colors.transparent,
+          textColor: Colors.red.shade600,
+          infoColor: Colors.red.shade600,
+        ),
+        onRefresh: () async {
+          _fictionRepository
+              .listFictionByPage(_fictionType, 0, _pageSize)
+              .then((value) {
+            if (!value.success) {
+              GlobalToast.toastLong(value.msg);
+            } else {
+              _novels = value.data;
+              // 重置刷新的索引值
+              _pageIndex = 1;
+            }
+          }).whenComplete(() {
+            if (mounted) {
+              _globalRefreshKey.currentState.setState(() {});
+            }
+          });
+        },
+        onLoad: _hasMore
+            ? () async {
+                _fictionRepository
+                  ..listFictionByPage(_fictionType, _pageIndex + 1, _pageSize)
+                      .then((value) {
+                    // 新增分页数据
+                    if (!value.success) {
+                      GlobalToast.toastLong(value.msg);
+                    } else {
+                      _pageIndex++;
+                      _novels.addAll(value.data);
+                      if (value.data.length < _pageSize) {
+                        // 没有更多数据
+                        _hasMore = false;
+                      } else {
+                        _hasMore = true;
+                      }
+                    }
+                  }).whenComplete(() {
+                    if (mounted) {
+                      _controller.finishLoad(success: true, noMore: !_hasMore);
+                      setState(() {});
+                    }
+                  });
+              }
+            : null,
+        child: ListView.separated(
+            physics: BouncingScrollPhysics(), // 回弹效果的scroll
+            itemBuilder: (context, index) => buildListItemView(_novels[index]),
+            separatorBuilder: (context, index) => Divider(
+                  height: 1.0,
+                  color: Colors.grey[200],
+                ),
+            itemCount: _novels.length));
+  }
 
   /// 构建listItemView
   Widget buildListItemView(FictionModel item) {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-      child: Container(
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            CachedNetworkImage(
-                placeholder: defaultPlaceHolder,
-                errorWidget: defaultErrorHolder,
-                imageUrl: item.cover,
-                width: 90,
-                height: 120,
-                fit: BoxFit.cover),
-            Expanded(
-                child: Padding(
-              padding: EdgeInsets.fromLTRB(8, 0, 0, 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Text(
-                    item.title,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 16, color: Colors.black87),
-                    overflow: TextOverflow.ellipsis,
+    return bindTapEvent(
+        Padding(
+          padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+          child: Container(
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                CachedNetworkImage(
+                    placeholder: defaultPlaceHolder,
+                    errorWidget: defaultErrorHolder,
+                    imageUrl: item.cover,
+                    width: 90,
+                    height: 120,
+                    fit: BoxFit.cover),
+                Expanded(
+                    child: Padding(
+                  padding: EdgeInsets.fromLTRB(8, 0, 0, 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text(
+                        item.title,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(fontSize: 16, color: Colors.black87),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                        child: Text(
+                          item.descs,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(fontSize: 13, color: Colors.black54),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 3,
+                        ),
+                      ),
+                      Text(
+                        item.author,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            fontSize: 13, color: Colors.grey.shade500),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                    child: Text(
-                      item.descs,
-                      textAlign: TextAlign.left,
-                      style: TextStyle(fontSize: 13, color: Colors.black54),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 3,
-                    ),
-                  ),
-                  Text(
-                    item.author,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 13, color: Colors.grey.shade500),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-            )),
-          ],
+                )),
+              ],
+            ),
+          ),
         ),
-      ),
-    );
+        onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => FictionDetailPage(item))));
+  }
+
+  RectTween _createRectTween(Rect begin, Rect end) {
+    return MaterialRectCenterArcTween(begin: begin, end: end);
   }
 
   @override
   void initState() {
-    Future<ResultDto<List<FictionModel>>> result =
-        _fictionRepository.listStoryBookByPage(_fictionType, 0, 10);
+    _controller = EasyRefreshController();
+    Future<ResultDto<List<FictionModel>>> result = _fictionRepository
+        .listFictionByPage(_fictionType, _pageIndex, _pageSize);
     result.then((value) {
       if (value.success) {
         _novels = value.data;
+        if (value.data.length < _pageSize) {
+          // 没有更多数据
+          _hasMore = false;
+        } else {
+          _hasMore = true;
+        }
       } else {
         GlobalToast.toastShort(value.msg);
       }

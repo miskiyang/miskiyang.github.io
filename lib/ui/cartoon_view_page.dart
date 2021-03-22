@@ -5,7 +5,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:personal_website/core/cartoon_repository.dart';
 import 'package:personal_website/model/cartoon_chapter_model.dart';
 import 'package:personal_website/ui/base/base_state.dart';
-import 'package:personal_website/util/system_util.dart';
+import 'package:personal_website/ui/global/global_toast.dart';
 
 /// 查看漫画
 class CartoonViewPage extends StatefulWidget {
@@ -36,77 +36,163 @@ class _CartoonViewPageState extends BaseState<CartoonViewPage> {
 
   Widget _contentView;
   AppBar _appBar;
+  bool _hasMore = false;
+  GlobalKey _globalRefreshKey = GlobalKey();
+
+  @override
+  Widget build(BuildContext context) {
+    return buildContent(context);
+  }
 
   @override
   Widget buildBodyWidget(BuildContext buildContext) {
-    return Scaffold(
-      body: Stack(
+    return Container(
+      color: Color(0xFF80532F),
+      child: Stack(
         children: _buildBody(),
       ),
     );
   }
 
   List<Widget> _buildBody() {
-    if (null == _contentView) {
-      _contentView = MediaQuery.removePadding(
-        context: context,
-        child: NotificationListener(
-          child: EasyRefresh(
-            onLoad: () async => _cartoonRepository.loadNextCartoonContent(),
-            onRefresh: () async {},
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  child: CachedNetworkImage(
-                    imageUrl: _cartoonRepository.cartoonContentImages[index],
-                    fit: BoxFit.cover,
-                  ),
-                  onTap: () {
-                    setState(() {
-                      _showAppBar = !_showAppBar;
-                    });
-                  },
-                );
-              },
-              itemCount: _cartoonRepository.cartoonContentImages.length,
-            ),
-            controller: _controller,
+    _contentView = MediaQuery.removePadding(
+      context: context,
+      child: NotificationListener(
+        child: EasyRefresh(
+          key: _globalRefreshKey,
+          enableControlFinishLoad: true,
+          header: ClassicalHeader(
+            refreshText: '下拉加载上一章',
+            refreshReadyText: '松开加载上一章',
+            refreshingText: '正在加载上一章',
+            refreshedText: '加载完成',
+            noMoreText: '已经是第一章了',
+            infoText: '更新于%T',
+            showInfo: true,
+            bgColor: Colors.transparent,
+            textColor: Colors.grey.shade200,
+            infoColor: Colors.black26,
           ),
-          onNotification: (ScrollNotification note) {
-            // 收到滚动事件
-            if (_showAppBar) {
-              setState(() {
-                _showAppBar = false;
-              });
-            } else {
-              // 如果不需要全局刷新，需要更新左下角索引ui
+          footer: ClassicalFooter(
+            loadText: '上拉加载下一章',
+            loadReadyText: '松开加载下一章',
+            loadingText: '正在加载下一章',
+            loadedText: '加载完成',
+            noMoreText: '已经是最后一章了',
+            infoText: '更新于%T',
+            showInfo: true,
+            bgColor: Colors.transparent,
+            textColor: Colors.grey.shade200,
+            infoColor: Colors.black26,
+          ),
+          onLoad: _hasMore
+              ? () async {
+                  _cartoonRepository.loadNextCartoonContent().then((value) {
+                    if (!value.success) {
+                      if (value.code == -2) {
+                        _hasMore = false;
+                      }
+                      GlobalToast.toastLong(value.msg);
+                    }
+                  }).whenComplete(() {
+                    if (mounted) {
+                      setState(() {
+                        _controller.finishLoad(
+                            success: true, noMore: !_hasMore);
+                      });
+                    }
+                  });
+                }
+              : null,
+          onRefresh: () async =>
+              _cartoonRepository.loadPreCartoonContent().then((value) {
+            if (!value.success) {
+              GlobalToast.toastLong(value.msg);
             }
-            return false;
-          },
+          }).whenComplete(() {
+            if (mounted) {
+              setState(() {});
+            }
+          }),
+          child: ListView.builder(
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                child: CachedNetworkImage(
+                  imageUrl:
+                      _cartoonRepository.cartoonContentImages[index].trim(),
+                  fit: BoxFit.cover,
+                ),
+                onTapUp: (d) {
+                  // 这里使用up事件是避免onTap和onScroll事件冲突
+                  setState(() {
+                    _showAppBar = !_showAppBar;
+                  });
+                },
+              );
+            },
+            itemCount: _cartoonRepository.cartoonContentImages.length,
+          ),
+          controller: _controller,
         ),
-        removeTop: true,
-        removeBottom: true,
-      );
-    }
+        onNotification: (ScrollNotification note) {
+          // 收到滚动事件
+          if (_showAppBar) {
+            setState(() {
+              _showAppBar = false;
+            });
+          } else {
+            // 如果不需要全局刷新，需要更新左下角索引ui
+          }
+          return false;
+        },
+      ),
+      removeTop: true,
+      removeBottom: true,
+    );
     if (null == _appBar) {
       _appBar = AppBar(
+        primary: true,
         title: Text(_cartoonTitle),
       );
     }
+    // 构建章节tip
+    Widget _chapterTip = Positioned(
+      child: Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            color: Colors.grey.shade600,
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.only(topRight: Radius.circular(6))),
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(8, 4, 8, 4),
+          child: Text(
+            "第 ${_cartoonRepository.currentChapterIndex + 1} 章",
+            style: TextStyle(
+              color: Colors.grey.shade300,
+              fontSize: 12,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ),
+      left: 0,
+      bottom: 0,
+    );
     if (_showAppBar) {
-      // 显示状态栏和导航栏
-      SystemUtil.showStatusBarAndNavigationBar();
       return [
         _contentView,
         Container(
           height: kToolbarHeight + kTextTabBarHeight, //appbar高度+状态栏高度
           child: _appBar,
         ),
+        _chapterTip,
       ];
     } else {
-      // 隐藏状态栏和导航栏
-      SystemUtil.hideStatusBarAndNavigationBar();
-      return [_contentView];
+      return [
+        _contentView,
+        _chapterTip,
+      ];
     }
   }
 
@@ -115,6 +201,9 @@ class _CartoonViewPageState extends BaseState<CartoonViewPage> {
     _controller = EasyRefreshController();
     _cartoonRepository.loadCurrentCartoonContent().then((value) {
       setLoadStatus(true);
+      if (value.code == 0) {
+        _hasMore = true;
+      }
       if (mounted) {
         setState(() {});
       }

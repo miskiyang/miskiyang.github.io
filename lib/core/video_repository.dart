@@ -33,6 +33,7 @@ class VideoRepository {
             count.toString());
     return result
         .then((value) => _repository.handleResult(value, from, count))
-        .catchError((e) => _repository.handleError(e, from, count));
+        .catchError(
+            (e) => _repository.handleError<List<VideoModel>>(e, from, count));
   }
 }

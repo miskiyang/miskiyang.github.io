@@ -22,18 +22,19 @@ class FictionRepository {
   Repository _repository = Repository();
 
   /// 分页加载数据
-  Future<ResultDto<List<FictionModel>>> listStoryBookByPage(
-      String fictionType, int from, int count) {
+  Future<ResultDto<List<FictionModel>>> listFictionByPage(
+      String fictionType, int pageIndex, int pageSize) {
     Future<BaseResponse<List<FictionModel>>> result =
         _repository.fetchDataFromRemote("/fiction/search/fictionType/" +
             fictionType +
             "/" +
-            from.toString() +
+            pageIndex.toString() +
             "/" +
-            count.toString());
+            pageSize.toString());
 
     return result
-        .then((value) => _repository.handleResult(value, from, count))
-        .catchError((e) => _repository.handleError(e, from, count));
+        .then((value) => _repository.handleResult(value, pageIndex, pageSize))
+        .catchError((e) => _repository.handleError<List<FictionModel>>(
+            e, pageIndex, pageSize));
   }
 }

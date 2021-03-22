@@ -6,9 +6,11 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
       child: Text(
         '首页',
@@ -16,4 +18,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

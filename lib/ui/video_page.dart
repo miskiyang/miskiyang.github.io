@@ -18,7 +18,8 @@ class VideoPage extends StatefulWidget {
   _VideoPageState createState() => _VideoPageState(_videoType);
 }
 
-class _VideoPageState extends BaseState<VideoPage> {
+class _VideoPageState extends BaseState<VideoPage>
+    with AutomaticKeepAliveClientMixin {
   VideoRepository _cartoonRepository = new VideoRepository();
   List<VideoModel> _videos = <VideoModel>[];
 
@@ -26,6 +27,15 @@ class _VideoPageState extends BaseState<VideoPage> {
   String _videoType;
 
   _VideoPageState(this._videoType);
+
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return buildContent(context);
+  }
 
   @override
   Widget buildBodyWidget(BuildContext buildContext) => ListView(

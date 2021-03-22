@@ -6,7 +6,7 @@ abstract class BaseState<T extends StatefulWidget> extends State<T> {
   Widget _loadingWidget;
 
   @protected
-  Widget build(BuildContext context) {
+  Widget buildContent(BuildContext context) {
     if (_status) {
       // 数据已经加载成功
       return buildBodyWidget(context);

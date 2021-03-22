@@ -35,7 +35,8 @@ class CartoonRepository {
             count.toString());
     return result
         .then((value) => _repository.handleResult(value, from, count))
-        .catchError((e) => _repository.handleError(e, from, count));
+        .catchError(
+            (e) => _repository.handleError<List<CartoonModel>>(e, from, count));
   }
 
   /// 加载动漫章节数据
@@ -45,7 +46,8 @@ class CartoonRepository {
         _repository.fetchDataFromRemote("/cartoonChapter/search/" + _cartoonId);
     return result
         .then((value) => _repository.handleResult(value, 0, 0))
-        .catchError((e) => _repository.handleError(e, 0, 0));
+        .catchError(
+            (e) => _repository.handleError<List<CartoonChapterModel>>(e, 0, 0));
   }
 
   /// 加载动漫内容数据
@@ -55,7 +57,8 @@ class CartoonRepository {
         .fetchDataFromRemote("/cartoonContent/search/" + _cartoonChapterId);
     return result
         .then((value) => _repository.handleResult(value, 0, 0))
-        .catchError((e) => _repository.handleError(e, 0, 0));
+        .catchError(
+            (e) => _repository.handleError<CartoonContentModel>(e, 0, 0));
   }
 
   set cartoonChapters(List<CartoonChapterModel> value) {
@@ -99,7 +102,7 @@ class CartoonRepository {
 
   /// 获取当前漫画章节内容
   Future<ResultDto<CartoonContentModel>> loadCurrentCartoonContent() async {
-    return _loadCartoonContent(_currentChapterIndex).then((value) {
+    return _loadCartoonContent(currentChapterIndex).then((value) {
       if (value.success) {
         _cartoonContentImages.clear();
         _cartoonContentImages.addAll(value.data.content);
@@ -110,13 +113,15 @@ class CartoonRepository {
 
   /// 获取下一个漫画章节内容
   Future<ResultDto<CartoonContentModel>> loadNextCartoonContent() async {
-    int _nextCartoonChapterIndex = _currentChapterIndex + 1;
+    int _nextCartoonChapterIndex = currentChapterIndex + 1;
     if (_nextCartoonChapterIndex >= _cartoonChapters.length) {
-      return ResultDto.failure(-1, "已经是最后一章了");
+      return ResultDto.failure(-2, "已经是最后一章了");
     } else {
+      print('======>nextPage======>$_nextCartoonChapterIndex');
       return _loadCartoonContent(_nextCartoonChapterIndex).then((value) {
         if (value.success) {
           _cartoonContentImages.addAll(value.data.content);
+          currentChapterIndex = _nextCartoonChapterIndex;
         }
         return value;
       });
@@ -125,13 +130,15 @@ class CartoonRepository {
 
   /// 获取上一个漫画章节内容
   Future<ResultDto<CartoonContentModel>> loadPreCartoonContent() async {
-    int _preCartoonChapterIndex = _currentChapterIndex - 1;
+    int _preCartoonChapterIndex = currentChapterIndex - 1;
     if (_preCartoonChapterIndex < 0) {
-      return ResultDto.failure(-1, "已经是最后一章了");
+      print('======>loadPreCartoonContent');
+      return ResultDto.failure(-2, "已经是第一章了");
     } else {
       return _loadCartoonContent(_preCartoonChapterIndex).then((value) {
         if (value.success) {
           _cartoonContentImages.insertAll(0, value.data.content);
+          currentChapterIndex = _preCartoonChapterIndex;
         }
         return value;
       });
@@ -139,17 +146,13 @@ class CartoonRepository {
   }
 
   /// 漫画内容相关的资源数据
-  List<CartoonChapterModel> _cartoonChapters = List();
-  List<String> _cartoonContentImages = List();
+  List<CartoonChapterModel> _cartoonChapters = [];
+  List<String> _cartoonContentImages = [];
   Map<String, CartoonContentModel> _cartoonContentMap = Map();
-  int _currentChapterIndex = -1;
+  int currentChapterIndex = -1;
 
   set cartoonContentMap(Map<String, CartoonContentModel> value) {
     _cartoonContentMap = value;
-  }
-
-  set currentChapterIndex(int value) {
-    _currentChapterIndex = value;
   }
 
   List<String> get cartoonContentImages => _cartoonContentImages;
@@ -160,6 +163,9 @@ class CartoonRepository {
     int _cartoonChapterIndex,
   ) {
     this._cartoonChapters = _cartoonChapters;
-    this._currentChapterIndex = _cartoonChapterIndex;
+    this.currentChapterIndex = _cartoonChapterIndex;
+    // 清楚历史数据
+    this._cartoonContentMap.clear();
+    this._cartoonContentImages.clear();
   }
 }

@@ -3,6 +3,8 @@
 <plist version="1.0">
 <dict>
 	<key>IDEDidComputeMac32BitWarning</key>
+	<key>NSAllowsArbitraryLoads</key>
 	<true/>
+
 </dict>
 </plist>

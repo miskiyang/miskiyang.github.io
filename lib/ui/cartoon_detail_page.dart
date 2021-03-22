@@ -29,68 +29,80 @@ class _CartoonDetailPageState extends State<CartoonDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        scrollDirection: Axis.vertical,
-        slivers: [
-          SliverAppBar(
-            leading: Builder(
-                builder: (BuildContext context) => IconButton(
-                      icon: Icon(
-                        Icons.arrow_back,
-                        size: 30,
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    )),
-            centerTitle: true,
-            floating: false,
-            pinned: true,
-            snap: false,
-            expandedHeight: 260,
-            flexibleSpace: FlexibleSpaceBar(
-              titlePadding: EdgeInsets.only(left: 20, bottom: 16),
-              title: Text(
-                _cartoon.title,
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white,
+    return MaterialApp(
+        theme: ThemeData(primarySwatch: Colors.red),
+        home: Scaffold(
+          body: CustomScrollView(
+            scrollDirection: Axis.vertical,
+            slivers: [
+              SliverAppBar(
+                leading: Builder(
+                    builder: (BuildContext context) => IconButton(
+                          icon: Icon(
+                            Icons.arrow_back,
+                            size: 30,
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        )),
+                brightness: Brightness.dark,
+                backgroundColor: Colors.transparent,
+                centerTitle: true,
+                floating: false,
+                pinned: true,
+                snap: false,
+                expandedHeight: 260,
+                flexibleSpace: FlexibleSpaceBar(
+                  titlePadding: EdgeInsets.only(left: 20, bottom: 16),
+                  title: Text(
+                    _cartoon.title,
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                  centerTitle: true,
+                  background: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Hero(
+                          tag: _cartoon.cover,
+                          createRectTween: _createRectTween,
+                          child: CachedNetworkImage(
+                              placeholder: transparentPlaceHolder,
+                              errorWidget: transparentErrorHolder,
+                              imageUrl: _cartoon.cover,
+                              width: 90,
+                              height: 120,
+                              fit: BoxFit.cover)),
+                      Positioned(
+                        right: 16,
+                        bottom: 16,
+                        child: Text(
+                          "作者：" + _cartoon.author,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Color(0xFFF8344E),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  collapseMode: CollapseMode.pin,
                 ),
               ),
-              centerTitle: true,
-              background: Stack(
-                fit: StackFit.expand,
-                children: [
-                  CachedNetworkImage(
-                    imageUrl: _cartoon.cover,
-                    placeholder: transparentPlaceHolder,
-                    errorWidget: transparentErrorHolder,
-                    fit: BoxFit.cover,
-                  ),
-                  Positioned(
-                    right: 16,
-                    bottom: 16,
-                    child: Text(
-                      "作者：" + _cartoon.author,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Color(0xFFF8344E),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              collapseMode: CollapseMode.pin,
-            ),
+              _buildCartoonDescriptionTitle(),
+              _buildCartoonDescription(),
+              _buildCartoonCategoriesTitle(),
+              _buildCartoonCategories(),
+            ],
           ),
-          _buildCartoonDescriptionTitle(),
-          _buildCartoonDescription(),
-          _buildCartoonCategoriesTitle(),
-          _buildCartoonCategories(),
-        ],
-      ),
-    );
+        ));
+  }
+
+  RectTween _createRectTween(Rect begin, Rect end) {
+    return MaterialRectCenterArcTween(begin: begin, end: end);
   }
 
   /// 构建漫画描述标题

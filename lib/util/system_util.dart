@@ -22,6 +22,7 @@ class SystemUtil {
   /// 设置状态栏透明
   static setStatusBarTransparent() =>
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-      ));
+          statusBarColor: Colors.transparent,
+          // light:黑色图标 dark：白色图标
+          statusBarIconBrightness: Brightness.dark));
 }
