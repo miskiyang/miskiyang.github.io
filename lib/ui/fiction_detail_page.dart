@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personal_website/model/fiction_model.dart';
 
+/// 小说详情
 class FictionDetailPage extends StatefulWidget {
   final FictionModel _fictionModel;
 

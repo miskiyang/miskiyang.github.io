@@ -66,16 +66,13 @@ class _CartoonDetailPageState extends State<CartoonDetailPage> {
                   background: Stack(
                     fit: StackFit.expand,
                     children: [
-                      Hero(
-                          tag: _cartoon.cover,
-                          createRectTween: _createRectTween,
-                          child: CachedNetworkImage(
-                              placeholder: transparentPlaceHolder,
-                              errorWidget: transparentErrorHolder,
-                              imageUrl: _cartoon.cover,
-                              width: 90,
-                              height: 120,
-                              fit: BoxFit.cover)),
+                      CachedNetworkImage(
+                          placeholder: transparentPlaceHolder,
+                          errorWidget: transparentErrorHolder,
+                          imageUrl: _cartoon.cover,
+                          width: 90,
+                          height: 120,
+                          fit: BoxFit.cover),
                       Positioned(
                         right: 16,
                         bottom: 16,
@@ -127,8 +124,7 @@ class _CartoonDetailPageState extends State<CartoonDetailPage> {
         child: Text(
           _cartoon.descs,
           style: TextStyle(fontSize: 16, height: 1.6, color: Colors.black54),
-          maxLines: 4,
-          overflow: TextOverflow.ellipsis,
+          overflow: TextOverflow.clip,
         ),
       ),
     );

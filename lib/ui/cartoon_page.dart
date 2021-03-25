@@ -140,16 +140,13 @@ class _CartoonPageState extends BaseState<CartoonPage>
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Hero(
-                    tag: item.cover,
-                    createRectTween: _createRectTween,
-                    child: CachedNetworkImage(
-                        placeholder: defaultPlaceHolder,
-                        errorWidget: defaultErrorHolder,
-                        imageUrl: item.cover,
-                        width: 90,
-                        height: 120,
-                        fit: BoxFit.cover)),
+                CachedNetworkImage(
+                    placeholder: defaultPlaceHolder,
+                    errorWidget: defaultErrorHolder,
+                    imageUrl: item.cover,
+                    width: 90,
+                    height: 120,
+                    fit: BoxFit.cover),
                 Expanded(
                     child: Padding(
                   padding: EdgeInsets.fromLTRB(8, 0, 0, 8),

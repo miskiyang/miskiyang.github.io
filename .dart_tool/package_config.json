@@ -44,6 +44,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "chewie",
+      "rootUri": "file:///Users/yangjianxin/Documents/Sdk/flutter-sdk/.pub-cache/hosted/pub.flutter-io.cn/chewie-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "clock",
       "rootUri": "file:///Users/yangjianxin/Documents/Sdk/flutter-sdk/.pub-cache/hosted/pub.flutter-io.cn/clock-1.1.0",
       "packageUri": "lib/",
@@ -66,6 +72,12 @@
       "rootUri": "file:///Users/yangjianxin/Documents/Sdk/flutter-sdk/.pub-cache/hosted/pub.flutter-io.cn/crypto-2.1.5",
       "packageUri": "lib/",
       "languageVersion": "2.3"
+    },
+    {
+      "name": "cupertino_icons",
+      "rootUri": "file:///Users/yangjianxin/Documents/Sdk/flutter-sdk/.pub-cache/hosted/pub.flutter-io.cn/cupertino_icons-1.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "fake_async",
@@ -338,6 +350,48 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "video_player",
+      "rootUri": "file:///Users/yangjianxin/Documents/Sdk/flutter-sdk/.pub-cache/hosted/pub.flutter-io.cn/video_player-2.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "video_player_platform_interface",
+      "rootUri": "file:///Users/yangjianxin/Documents/Sdk/flutter-sdk/.pub-cache/hosted/pub.flutter-io.cn/video_player_platform_interface-4.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "video_player_web",
+      "rootUri": "file:///Users/yangjianxin/Documents/Sdk/flutter-sdk/.pub-cache/hosted/pub.flutter-io.cn/video_player_web-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "wakelock",
+      "rootUri": "file:///Users/yangjianxin/Documents/Sdk/flutter-sdk/.pub-cache/hosted/pub.flutter-io.cn/wakelock-0.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "wakelock_macos",
+      "rootUri": "file:///Users/yangjianxin/Documents/Sdk/flutter-sdk/.pub-cache/hosted/pub.flutter-io.cn/wakelock_macos-0.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "wakelock_platform_interface",
+      "rootUri": "file:///Users/yangjianxin/Documents/Sdk/flutter-sdk/.pub-cache/hosted/pub.flutter-io.cn/wakelock_platform_interface-0.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "wakelock_web",
+      "rootUri": "file:///Users/yangjianxin/Documents/Sdk/flutter-sdk/.pub-cache/hosted/pub.flutter-io.cn/wakelock_web-0.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "win32",
       "rootUri": "file:///Users/yangjianxin/Documents/Sdk/flutter-sdk/.pub-cache/hosted/pub.flutter-io.cn/win32-1.7.4+1",
       "packageUri": "lib/",
@@ -362,7 +416,7 @@
       "languageVersion": "2.10"
     }
   ],
-  "generated": "2021-03-19T09:17:27.168279Z",
+  "generated": "2021-03-24T09:42:44.035278Z",
   "generator": "pub",
-  "generatorVersion": "2.12.1"
+  "generatorVersion": "2.12.2"
 }

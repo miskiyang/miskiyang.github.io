@@ -1,6 +1,7 @@
 import 'package:personal_website/core/http/Repository.dart';
 import 'package:personal_website/model/http/BaseResponse.dart';
 import 'package:personal_website/model/http/ResultDto.dart';
+import 'package:personal_website/model/video_chapter_model.dart';
 import 'package:personal_website/model/video_model.dart';
 
 /// 视频数据资源中心
@@ -35,5 +36,15 @@ class VideoRepository {
         .then((value) => _repository.handleResult(value, from, count))
         .catchError(
             (e) => _repository.handleError<List<VideoModel>>(e, from, count));
+  }
+
+  /// 获取视频章节
+  Future<ResultDto<List<VideoChapterModel>>> listVideoChapter(String videoId) {
+    Future<BaseResponse<List<VideoChapterModel>>> result =
+        _repository.fetchDataFromRemote("/videoChapter/search/" + videoId);
+    return result
+        .then((value) => _repository.handleResult(value, 0, 0))
+        .catchError(
+            (e) => _repository.handleError<List<VideoChapterModel>>(e, 0, 0));
   }
 }
