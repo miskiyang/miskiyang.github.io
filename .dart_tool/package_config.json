@@ -188,6 +188,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "native_device_orientation",
+      "rootUri": "file:///Users/yangjianxin/Documents/Sdk/flutter-sdk/.pub-cache/hosted/pub.flutter-io.cn/native_device_orientation-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "octo_image",
       "rootUri": "file:///Users/yangjianxin/Documents/Sdk/flutter-sdk/.pub-cache/hosted/pub.flutter-io.cn/octo_image-0.3.0",
       "packageUri": "lib/",
@@ -416,7 +422,7 @@
       "languageVersion": "2.10"
     }
   ],
-  "generated": "2021-03-24T09:42:44.035278Z",
+  "generated": "2021-03-26T07:38:40.137341Z",
   "generator": "pub",
   "generatorVersion": "2.12.2"
 }

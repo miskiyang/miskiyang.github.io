@@ -5,6 +5,7 @@ import 'package:personal_website/model/video_chapter_model.dart';
 import 'package:personal_website/model/video_model.dart';
 import 'package:personal_website/ui/global/global_image.dart';
 import 'package:personal_website/ui/global/global_toast.dart';
+import 'package:personal_website/ui/video_palyer_page.dart';
 
 import 'global/global_widget.dart';
 
@@ -151,6 +152,9 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
                         borderRadius: BorderRadius.all(Radius.circular(4)),
                         onTap: () {
                           // 跳转视频播放
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  VideoPlayerPage(_videoChapters[index])));
                         },
                         splashColor: Colors.grey.shade300,
                         child: Container(

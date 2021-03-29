@@ -30,6 +30,7 @@ dependencies:
   flutter_easyrefresh: ^2.1.8
   chewie: ^1.0.0
   video_player: ^2.0.2
+  native_device_orientation: ^1.0.0
 
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,7 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:native_device_orientation/native_device_orientation.dart';
 import 'package:personal_website/model/video_chapter_model.dart';
-import 'package:personal_website/ui/global/global_widget.dart';
 import 'package:video_player/video_player.dart';
 
 /// 视频播放页面
@@ -25,24 +25,56 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: NativeDeviceOrientationReader(
+        builder: (context) {
+          NativeDeviceOrientation orientationRead =
+              NativeDeviceOrientationReader.orientation(context);
+          print('======>$orientationRead');
+          // 强制屏幕横屏
+          orientation();
+          return Chewie(controller: _chewieController);
+        },
+        useSensor: true,
+      ),
+    );
   }
 
   @override
   void initState() {
+    orientation();
+    // 视频widgetControls初始化
+    initVideoControls();
+    super.initState();
+  }
+
+  void orientation() async =>
+      NativeDeviceOrientationCommunicator().orientation(useSensor: true);
+
+  /// 初始化视频widget
+  void initVideoControls() {
+    // 视频widget初始化
     _videoPlayerController =
         VideoPlayerController.network(_videoChapterModel.chapterUrl);
     _chewieController = ChewieController(
         videoPlayerController: _videoPlayerController,
         fullScreenByDefault: true,
-        placeholder: loadingWidget('加载中...'),
+        placeholder: Center(
+          child: Text(
+            "加载中...",
+            style: TextStyle(fontSize: 16, color: Colors.red),
+          ),
+        ),
         autoPlay: true,
+        showControlsOnInitialize: false,
+        allowedScreenSleep: false,
+        allowFullScreen: false,
+        allowMuting: true,
         looping: false);
     _chewieController.play();
     _chewieController.addListener(() {
       print('======>addListener======>');
     });
-    super.initState();
   }
 
   @override
