@@ -1,12 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
-import 'package:personal_website/ui/cartoon_page.dart';
-import 'package:personal_website/ui/custom/custom_underline_tab_indicator.dart';
-import 'package:personal_website/ui/fiction_page.dart';
-import 'package:personal_website/ui/global/global_const_data.dart';
-import 'package:personal_website/ui/home_page.dart';
-import 'package:personal_website/ui/video_page.dart';
+import 'package:novel_cartoon_video/ui/cartoon_page.dart';
+import 'package:novel_cartoon_video/ui/custom/custom_underline_tab_indicator.dart';
+import 'package:novel_cartoon_video/ui/fiction_page.dart';
+import 'package:novel_cartoon_video/ui/global/global_const_data.dart';
+import 'package:novel_cartoon_video/ui/home_page.dart';
+import 'package:novel_cartoon_video/ui/video_page.dart';
 
 class MainPage extends StatefulWidget {
   @override

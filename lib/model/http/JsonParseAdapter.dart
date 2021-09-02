@@ -1,9 +1,9 @@
-import 'package:personal_website/model/cartoon_chapter_model.dart';
-import 'package:personal_website/model/cartoon_content_model.dart';
-import 'package:personal_website/model/cartoon_model.dart';
-import 'package:personal_website/model/fiction_model.dart';
-import 'package:personal_website/model/video_chapter_model.dart';
-import 'package:personal_website/model/video_model.dart';
+import 'package:novel_cartoon_video/model/cartoon_chapter_model.dart';
+import 'package:novel_cartoon_video/model/cartoon_content_model.dart';
+import 'package:novel_cartoon_video/model/cartoon_model.dart';
+import 'package:novel_cartoon_video/model/fiction_model.dart';
+import 'package:novel_cartoon_video/model/video_chapter_model.dart';
+import 'package:novel_cartoon_video/model/video_model.dart';
 
 /// 实体解析适配器
 

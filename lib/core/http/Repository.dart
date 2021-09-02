@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:personal_website/model/http/BaseResponse.dart';
-import 'package:personal_website/model/http/ResultDto.dart';
+import 'package:novel_cartoon_video/model/http/BaseResponse.dart';
+import 'package:novel_cartoon_video/model/http/ResultDto.dart';
 
 const remoteServerUrl = "http://api.pingcc.cn";
 

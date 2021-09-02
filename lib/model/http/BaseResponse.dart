@@ -1,4 +1,4 @@
-import 'package:personal_website/model/http/JsonParseAdapter.dart';
+import 'package:novel_cartoon_video/model/http/JsonParseAdapter.dart';
 
 class BaseResponse<T> {
   int _code;

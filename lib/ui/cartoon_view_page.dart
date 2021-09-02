@@ -2,10 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:personal_website/core/cartoon_repository.dart';
-import 'package:personal_website/model/cartoon_chapter_model.dart';
-import 'package:personal_website/ui/base/base_state.dart';
-import 'package:personal_website/ui/global/global_toast.dart';
+import 'package:novel_cartoon_video/core/cartoon_repository.dart';
+import 'package:novel_cartoon_video/model/cartoon_chapter_model.dart';
+import 'package:novel_cartoon_video/ui/base/base_state.dart';
+import 'package:novel_cartoon_video/ui/global/global_toast.dart';
 
 /// 查看漫画
 class CartoonViewPage extends StatefulWidget {

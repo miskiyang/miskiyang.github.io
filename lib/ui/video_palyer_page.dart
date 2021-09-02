@@ -1,7 +1,7 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:native_device_orientation/native_device_orientation.dart';
-import 'package:personal_website/model/video_chapter_model.dart';
+import 'package:novel_cartoon_video/model/video_chapter_model.dart';
 import 'package:video_player/video_player.dart';
 
 /// 视频播放页面

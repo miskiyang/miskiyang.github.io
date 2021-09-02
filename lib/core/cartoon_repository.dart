@@ -1,9 +1,9 @@
-import 'package:personal_website/core/http/Repository.dart';
-import 'package:personal_website/model/cartoon_chapter_model.dart';
-import 'package:personal_website/model/cartoon_content_model.dart';
-import 'package:personal_website/model/cartoon_model.dart';
-import 'package:personal_website/model/http/BaseResponse.dart';
-import 'package:personal_website/model/http/ResultDto.dart';
+import 'package:novel_cartoon_video/core/http/Repository.dart';
+import 'package:novel_cartoon_video/model/cartoon_chapter_model.dart';
+import 'package:novel_cartoon_video/model/cartoon_content_model.dart';
+import 'package:novel_cartoon_video/model/cartoon_model.dart';
+import 'package:novel_cartoon_video/model/http/BaseResponse.dart';
+import 'package:novel_cartoon_video/model/http/ResultDto.dart';
 
 /// 漫画数据资源中心
 class CartoonRepository {

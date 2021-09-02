@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:personal_website/core/cartoon_repository.dart';
-import 'package:personal_website/model/cartoon_model.dart';
-import 'package:personal_website/model/http/ResultDto.dart';
-import 'package:personal_website/ui/base/base_state.dart';
-import 'package:personal_website/ui/base_page.dart';
-import 'package:personal_website/ui/global/global_image.dart';
+import 'package:novel_cartoon_video/core/cartoon_repository.dart';
+import 'package:novel_cartoon_video/model/cartoon_model.dart';
+import 'package:novel_cartoon_video/model/http/ResultDto.dart';
+import 'package:novel_cartoon_video/ui/base/base_state.dart';
+import 'package:novel_cartoon_video/ui/base_page.dart';
+import 'package:novel_cartoon_video/ui/global/global_image.dart';
 
 import 'cartoon_detail_page.dart';
 import 'global/global_toast.dart';

@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:personal_website/core/cartoon_repository.dart';
-import 'package:personal_website/model/cartoon_chapter_model.dart';
-import 'package:personal_website/model/cartoon_model.dart';
-import 'package:personal_website/ui/cartoon_view_page.dart';
-import 'package:personal_website/ui/global/global_image.dart';
-import 'package:personal_website/ui/global/global_toast.dart';
-import 'package:personal_website/ui/global/global_widget.dart';
+import 'package:novel_cartoon_video/core/cartoon_repository.dart';
+import 'package:novel_cartoon_video/model/cartoon_chapter_model.dart';
+import 'package:novel_cartoon_video/model/cartoon_model.dart';
+import 'package:novel_cartoon_video/ui/cartoon_view_page.dart';
+import 'package:novel_cartoon_video/ui/global/global_image.dart';
+import 'package:novel_cartoon_video/ui/global/global_toast.dart';
+import 'package:novel_cartoon_video/ui/global/global_widget.dart';
 
 /// 漫画详情页面
 class CartoonDetailPage extends StatefulWidget {

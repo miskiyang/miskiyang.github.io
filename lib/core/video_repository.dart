@@ -1,8 +1,8 @@
-import 'package:personal_website/core/http/Repository.dart';
-import 'package:personal_website/model/http/BaseResponse.dart';
-import 'package:personal_website/model/http/ResultDto.dart';
-import 'package:personal_website/model/video_chapter_model.dart';
-import 'package:personal_website/model/video_model.dart';
+import 'package:novel_cartoon_video/core/http/Repository.dart';
+import 'package:novel_cartoon_video/model/http/BaseResponse.dart';
+import 'package:novel_cartoon_video/model/http/ResultDto.dart';
+import 'package:novel_cartoon_video/model/video_chapter_model.dart';
+import 'package:novel_cartoon_video/model/video_model.dart';
 
 /// 视频数据资源中心
 class VideoRepository {

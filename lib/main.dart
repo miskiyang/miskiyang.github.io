@@ -2,8 +2,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:personal_website/ui/main_page.dart';
-import 'package:personal_website/util/system_util.dart';
+import 'package:novel_cartoon_video/ui/main_page.dart';
+import 'package:novel_cartoon_video/util/system_util.dart';
 
 void main() {
   runApp(MaterialApp(

@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/flutter_novel_cartoon_video.iml" filepath="$PROJECT_DIR$/flutter_novel_cartoon_video.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android/personal_website_android.iml" filepath="$PROJECT_DIR$/android/personal_website_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/novel_cartoon_video.iml" filepath="$PROJECT_DIR$/novel_cartoon_video.iml" />
     </modules>
   </component>
 </project>

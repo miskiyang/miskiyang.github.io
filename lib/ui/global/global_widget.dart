@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loading/loading.dart';
-import 'package:personal_website/widget/ball_pulse_fix_indicator.dart';
+import 'package:novel_cartoon_video/widget/ball_pulse_fix_indicator.dart';
 
 /// 加载中的widget
 Widget loadingWidget(String text) {

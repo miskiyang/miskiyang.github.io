@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personal_website/ui/global/global_widget.dart';
+import 'package:novel_cartoon_video/ui/global/global_widget.dart';
 
 abstract class BaseState<T extends StatefulWidget> extends State<T> {
   bool _status = false;

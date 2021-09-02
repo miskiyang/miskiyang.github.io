@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:personal_website/core/video_repository.dart';
-import 'package:personal_website/model/video_chapter_model.dart';
-import 'package:personal_website/model/video_model.dart';
-import 'package:personal_website/ui/global/global_image.dart';
-import 'package:personal_website/ui/global/global_toast.dart';
-import 'package:personal_website/ui/video_palyer_page.dart';
+import 'package:novel_cartoon_video/core/video_repository.dart';
+import 'package:novel_cartoon_video/model/video_chapter_model.dart';
+import 'package:novel_cartoon_video/model/video_model.dart';
+import 'package:novel_cartoon_video/ui/global/global_image.dart';
+import 'package:novel_cartoon_video/ui/global/global_toast.dart';
+import 'package:novel_cartoon_video/ui/video_palyer_page.dart';
 
 import 'global/global_widget.dart';
 

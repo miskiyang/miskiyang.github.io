@@ -1,4 +1,4 @@
-package com.miskiyang.personal.personal_website
+package com.miskiyang.flutter.novel_cartoon_video
 
 import io.flutter.embedding.android.FlutterActivity
 
